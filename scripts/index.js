@@ -43,18 +43,39 @@ const renderFields = (fields) => {
 
                 inputWrapper.prepend(formInput)
                 Object.keys(field.input).forEach(key => {
-                    formInput.attr(key, field.input[key])
+                    if (key === 'required'){
+                        formInput.prop(key, field.input[key])
+                    } else {
+                        formInput.attr(key, field.input[key])
+                    }
+                })
+                break
+            }
+            case ('textarea'): {
+                fieldsWrapper.append($('<div></div>').addClass('form-floating').attr('id', index))
+                const inputWrapper = $(`#${index}.form-floating`)
+
+                //check if label property exists. If not - just add an input form
+                if (field.hasOwnProperty('label')) {
+                    inputWrapper.append($(`<label>${field.label}</label>`).attr('for', `input${index}`))
+                }
+
+                //make an input form w/ all of its attributes
+                const formInput = ($(`<textarea></textarea>`).addClass('form-control')).attr('id', `input${index}`)
+
+                inputWrapper.prepend(formInput)
+                Object.keys(field.input).forEach(key => {
+                    if (key === 'required'){
+                        formInput.prop(key, field.input[key])
+                    } else {
+                        formInput.attr(key, field.input[key])
+                    }
                 })
                 break
             }
             case ('file'): {
                 fieldsWrapper.append($('<div></div>').addClass('input-group').attr('id', index))
                 const inputWrapper = $(`#${index}.input-group`)
-
-                //check if label property exists. If not - just add an input form
-                if (field.hasOwnProperty('label')) {
-                    inputWrapper.append($(`<label>${field.label}</label>`).attr('for', `input${index}`))
-                }
 
                 //make an input form w/ all of its attributes
                 const formInput = ($(`<input/>`).addClass('form-control')).attr('id', `input${index}`)
@@ -63,6 +84,11 @@ const renderFields = (fields) => {
                 Object.keys(field.input).forEach(key => {
                     formInput.attr(key, field.input[key])
                 })
+
+                //check if label property exists. If not - just add an input form
+                if (field.hasOwnProperty('label')) {
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('input-group-text').attr('for', `input${index}`))
+                }
                 break
             }
             case ('checkbox'): {
