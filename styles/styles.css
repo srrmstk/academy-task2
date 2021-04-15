@@ -14,4 +14,8 @@ header {
   max-width: 1200px;
 }
 
+.form-floating > .form-control, .form-floating > .form-select {
+  margin-bottom: 1rem;
+}
+
 /*# sourceMappingURL=styles.css.map */
