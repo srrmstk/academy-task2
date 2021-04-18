@@ -1,3 +1,9 @@
+let wrapper = $('#formWrapper')
+
+const clearForm = () => {
+    wrapper.html('')
+}
+
 const getFile = () => {
     const file = document.getElementById('inputGroupFile')
     const reader = new FileReader()
@@ -10,10 +16,8 @@ const getFile = () => {
     } catch (ex) {
         console.log(ex)
     }
+
 }
-
-let wrapper = $('#formWrapper')
-
 
 const renderButtons = (buttons) => {
     wrapper.append($(`<div></div>`).addClass('form-buttons-wrapper'))
@@ -29,21 +33,22 @@ const renderFields = (fields) => {
     fields.forEach((field, index) => {
         switch (field.input.type) {
             case ('text'):
-            case ('password'): {
-                fieldsWrapper.append($('<div></div>').addClass('form-floating').attr('id', index))
-                const inputWrapper = $(`#${index}.form-floating`)
+            case ('password'):
+            case ('email'): {
+                fieldsWrapper.append($('<div></div>').addClass('form-input').attr('id', index))
+                const inputWrapper = $(`#${index}.form-input`)
 
                 //check if label property exists. If not - just add an input form
                 if (field.hasOwnProperty('label')) {
-                    inputWrapper.append($(`<label>${field.label}</label>`).attr('for', `input${index}`))
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('form-label').attr('for', `input${index}`))
                 }
 
                 //make an input form w/ all of its attributes
                 const formInput = ($(`<input/>`).addClass('form-control')).attr('id', `input${index}`)
 
-                inputWrapper.prepend(formInput)
+                inputWrapper.append(formInput)
                 Object.keys(field.input).forEach(key => {
-                    if (key === 'required'){
+                    if (key === 'required') {
                         formInput.prop(key, field.input[key])
                     } else {
                         formInput.attr(key, field.input[key])
@@ -52,20 +57,20 @@ const renderFields = (fields) => {
                 break
             }
             case ('textarea'): {
-                fieldsWrapper.append($('<div></div>').addClass('form-floating').attr('id', index))
-                const inputWrapper = $(`#${index}.form-floating`)
+                fieldsWrapper.append($('<div></div>').addClass('form-input').attr('id', index))
+                const inputWrapper = $(`#${index}.form-input`)
 
                 //check if label property exists. If not - just add an input form
                 if (field.hasOwnProperty('label')) {
-                    inputWrapper.append($(`<label>${field.label}</label>`).attr('for', `input${index}`))
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('form-label').attr('for', `input${index}`))
                 }
 
                 //make an input form w/ all of its attributes
                 const formInput = ($(`<textarea></textarea>`).addClass('form-control')).attr('id', `input${index}`)
 
-                inputWrapper.prepend(formInput)
+                inputWrapper.append(formInput)
                 Object.keys(field.input).forEach(key => {
-                    if (key === 'required'){
+                    if (key === 'required') {
                         formInput.prop(key, field.input[key])
                     } else {
                         formInput.attr(key, field.input[key])
@@ -82,7 +87,13 @@ const renderFields = (fields) => {
 
                 inputWrapper.prepend(formInput)
                 Object.keys(field.input).forEach(key => {
-                    formInput.attr(key, field.input[key])
+                    if (key === 'required' || key === 'multiple') {
+                        formInput.prop(key, field.input[key])
+                    } else if (key === 'filetype') {
+                        formInput.attr('accept', `.${field.input[key].join(',.')}`)
+                    } else {
+                        formInput.attr(key, field.input[key])
+                    }
                 })
 
                 //check if label property exists. If not - just add an input form
@@ -91,8 +102,135 @@ const renderFields = (fields) => {
                 }
                 break
             }
+            case ('date'): {
+                fieldsWrapper.append($('<div></div>').addClass('form-date').attr('id', index))
+                const inputWrapper = $(`#${index}.form-date`)
+
+                //check if label property exists. If not - just add an input form
+                if (field.hasOwnProperty('label')) {
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('form-date-label').attr('for', `input${index}`))
+                }
+
+
+                //make an input form w/ all of its attributes
+                const formInput = ($(`<input/>`).addClass('form-control')).attr('id', `input${index}`)
+
+                inputWrapper.append(formInput)
+
+                Object.keys(field.input).forEach(key => {
+                    if (key === 'required') {
+                        formInput.prop(key, field.input[key])
+                    } else {
+                        formInput.attr(key, field.input[key])
+                    }
+                })
+                break
+            }
+            case ('color'): {
+                fieldsWrapper.append($('<div></div>').addClass('form-control').attr('id', index))
+                const inputWrapper = $(`#${index}.form-control`)
+
+                //check if label property exists. If not - just add an input form
+                if (field.hasOwnProperty('label')) {
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('form-label').attr('for', `input${index}`))
+                }
+
+                //make an input form w/ all of its attributes
+                const formInput = ($(`<input/>`).addClass('form-control')).attr('id', `input${index}`)
+
+                inputWrapper.append(formInput)
+                Object.keys(field.input).forEach(key => {
+                    if (key === 'colors') {
+                        formInput.attr({list: 'colors', value: field.input[key][0]})
+                        inputWrapper.append($(`<datalist></datalist>`).attr('id', 'colors'))
+                        for (let i of field.input[key]) {
+                            $('#colors').append($(`<option></option>`).attr('value', i))
+                        }
+                    } else {
+                        formInput.attr(key, field.input[key])
+                    }
+                })
+
+                break
+            }
             case ('checkbox'): {
-                console.log(field.input.type)
+                fieldsWrapper.append($('<div></div>').addClass('form-check').attr('id', index))
+                const inputWrapper = $(`#${index}.form-check`)
+
+                //check if label property exists. If not - just add an input form
+                if (field.hasOwnProperty('label')) {
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('form-check-label').attr('for', `input${index}`))
+                }
+
+                //make an input form w/ all of its attributes
+                const formInput = ($(`<input/>`).addClass('form-check-input')).attr('id', `input${index}`)
+
+                inputWrapper.prepend(formInput)
+                Object.keys(field.input).forEach(key => {
+                        if (key === 'checked') {
+                            field.input[key] === "false" || field.input[key] === false
+                                ? formInput.removeAttr(key)
+                                : formInput.attr(key, field.input[key])
+                        } else {
+                            formInput.attr(key, field.input[key])
+                        }
+                    }
+                )
+                break
+            }
+            case ('number'): {
+                fieldsWrapper.append($('<div></div>').addClass('form-input').attr('id', index))
+                const inputWrapper = $(`#${index}.form-input`)
+
+                //check if label property exists. If not - just add an input form
+                if (field.hasOwnProperty('label')) {
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('form-label').attr('for', `input${index}`))
+                }
+
+                //make an input form w/ all of its attributes
+                const formInput = ($(`<input/>`).addClass('form-control')).attr('id', `input${index}`)
+
+                inputWrapper.append(formInput)
+                Object.keys(field.input).forEach(key => {
+                    if (key === 'required') {
+                        formInput.prop(key, field.input[key])
+                    } else if (key === 'mask') {
+                        formInput.attr('type', 'text')
+                        formInput.mask(field.input[key])
+                    } else {
+                        formInput.attr(key, field.input[key])
+                    }
+                })
+                break
+            }
+            case ('technology'): {
+                fieldsWrapper.append($('<div></div>').addClass('form-control').attr('id', index))
+                const inputWrapper = $(`#${index}.form-control`)
+
+                //check if label property exists. If not - just add an input form
+                if (field.hasOwnProperty('label')) {
+                    inputWrapper.append($(`<label>${field.label}</label>`).addClass('form-label').attr('for', `input${index}`))
+                }
+
+                //make an input form w/ all of its attributes
+                const formInput = ($(`<select></select>`).addClass('form-select')).attr('id', `input${index}`)
+
+                inputWrapper.append(formInput)
+                Object.keys(field.input).forEach(key => {
+                    if (key === 'technologies') {
+                        for (let i of field.input[key]) {
+                            formInput.append($(`<option>${i}</option>`))
+                        }
+                    } else {
+                        formInput.attr(key, field.input[key])
+                    }
+                })
+                // <select className="form-select" aria-label="Default select example">
+                //     <option selected>Open this select menu</option>
+                //     <option value="1">One</option>
+                //     <option value="2">Two</option>
+                //     <option value="3">Three</option>
+                // </select>
                 break
             }
         }
@@ -100,13 +238,16 @@ const renderFields = (fields) => {
 }
 
 const renderReferences = (references) => {
-    // console.log(`References: ${references}`)
+    wrapper.append($(`<div></div>`).addClass('form-references-wrapper'))
+    let referencesWrapper = $('.form-buttons-wrapper')
+    references.forEach((item, index) => {
+        console.log(item)
+    })
 }
-
 
 const buildForm = (result) => {
     const data = JSON.parse(result)
-    wrapper.html('')
+    clearForm()
     const keys = Object.keys(data)
     for (let key of keys) {
         switch (key) {

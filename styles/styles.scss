@@ -2,6 +2,7 @@ body {
   margin: 0 auto;
 }
 
+
 header {
   margin-top: 1em;
   display: flex;
@@ -14,10 +15,54 @@ header {
   max-width: 1200px;
 }
 
-.form-floating>.form-control, .form-floating>.form-select{
+
+.form-input {
+  margin-bottom: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+
+  .btn {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}
+
+.form-check {
+  margin-top: 1.5rem;
+}
+
+.form-date {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  margin-right: 1rem;
   margin-bottom: 1rem;
 }
 
-.input-group{
-  margin-bottom: 1rem;
+@media (max-width: 576px) {
+  body {
+    font-size: .7rem;
+  }
+  .btn {
+    font-size: .7rem;
+  }
+  .form-control {
+    font-size: .7rem;
+  }
+  .input-group {
+    .btn {
+      font-size: .7rem;
+    }
+
+    input {
+      font-size: .7rem;
+    }
+
+    label {
+      font-size: .7rem;
+    }
+  }
 }

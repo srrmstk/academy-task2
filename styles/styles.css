@@ -14,12 +14,53 @@ header {
   max-width: 1200px;
 }
 
-.form-floating > .form-control, .form-floating > .form-select {
-  margin-bottom: 1rem;
+.form-input {
+  margin-bottom: 1.5rem;
 }
 
 .input-group {
   margin-bottom: 1rem;
+}
+.input-group .btn {
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.form-check {
+  margin-top: 1.5rem;
+}
+
+.form-date {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 0.7rem;
+  }
+
+  .btn {
+    font-size: 0.7rem;
+  }
+
+  .form-control {
+    font-size: 0.7rem;
+  }
+
+  .input-group .btn {
+    font-size: 0.7rem;
+  }
+  .input-group input {
+    font-size: 0.7rem;
+  }
+  .input-group label {
+    font-size: 0.7rem;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */
