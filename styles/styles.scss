@@ -2,7 +2,6 @@ body {
   margin: 0 auto;
 }
 
-
 header {
   margin-top: 1em;
   display: flex;
@@ -14,7 +13,6 @@ header {
 .container {
   max-width: 1200px;
 }
-
 
 .form-input {
   margin-bottom: 1.5rem;
@@ -40,6 +38,29 @@ header {
 .btn {
   margin-right: 1rem;
   margin-bottom: 1rem;
+}
+
+.form-references-wrapper{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  :first-child{
+    margin-right: .25rem;
+  }
+  :last-child{
+    margin-left: .25rem;
+  }
+}
+
+.form-buttons-wrapper{
+  display: flex;
+  justify-content: center;
+  :first-child{
+    margin-right: .25rem;
+  }
+  :last-child{
+    margin-left: .25rem;
+  }
 }
 
 @media (max-width: 576px) {

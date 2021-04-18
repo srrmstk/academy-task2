@@ -239,9 +239,28 @@ const renderFields = (fields) => {
 
 const renderReferences = (references) => {
     wrapper.append($(`<div></div>`).addClass('form-references-wrapper'))
-    let referencesWrapper = $('.form-buttons-wrapper')
-    references.forEach((item, index) => {
-        console.log(item)
+    let referencesWrapper = $('.form-references-wrapper')
+    references.forEach((item) => {
+        if (item.hasOwnProperty('input')) {
+            const refInput = ($(`<input/>`).addClass('form-check-input'))
+            referencesWrapper.append(refInput)
+            Object.keys(item.input).forEach(key => {
+                    if (key === 'checked') {
+                        item.input[key] === "false" || item.input[key] === false
+                            ? refInput.removeAttr(key)
+                            : refInput.attr(key, field.input[key])
+                    } else {
+                        refInput.attr(key, item.input[key])
+                    }
+                }
+            )
+        }
+        if (item.hasOwnProperty('text without ref')) {
+            referencesWrapper.append(`<div>${item["text without ref"]}</div>`)
+        }
+        if (item.hasOwnProperty('ref')) {
+            referencesWrapper.append($(`<a>${item.text}</a>`).attr('href', item.ref))
+        }
     })
 }
 

@@ -39,6 +39,29 @@ header {
   margin-bottom: 1rem;
 }
 
+.form-references-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.form-references-wrapper :first-child {
+  margin-right: 0.25rem;
+}
+.form-references-wrapper :last-child {
+  margin-left: 0.25rem;
+}
+
+.form-buttons-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.form-buttons-wrapper :first-child {
+  margin-right: 0.25rem;
+}
+.form-buttons-wrapper :last-child {
+  margin-left: 0.25rem;
+}
+
 @media (max-width: 576px) {
   body {
     font-size: 0.7rem;
